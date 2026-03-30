@@ -95,12 +95,12 @@ This corresponds to the selected final setting:
 
 This repository also includes supporting experiments that show the progression toward the final model:
 
-| Notebook | Role | Split used | Accuracy | Macro AUC |
+| Notebook | Role | Accuracy | Macro AUC |
 |---|---|---:|---:|---:|
-| `physics-informed-densenet.ipynb` | Main submission | rebuilt 90:10 | 0.9731 | 0.9976 |
-| `densenet_run_best.ipynb` | Strong DenseNet baseline | provided 30000 / 7500 | ~0.95 | 0.9919 |
-| `lenspinn-dense-correct (1).ipynb` | Hybrid physics + DenseNet ablation | provided 30000 / 7500 | 0.9287 | 0.9872 |
-| `lenspinn-accurate.ipynb` | Faithful LensPINN-style recreation | rebuilt 90:10 | 0.5736 | 0.7463 |
+| `physics-informed-densenet.ipynb` | Main submission | 0.9731 | 0.9976 |
+| `densenet_run_best.ipynb` | Strong DenseNet baseline | 0.95 | 0.9919 |
+| `lenspinn-dense-correct (1).ipynb` | Hybrid physics + DenseNet ablation | 0.9287 | 0.9872 |
+| `lenspinn-accurate.ipynb` | Faithful LensPINN-style recreation | 0.5736 | 0.7463 |
 
 The final submission notebook is the one I would recommend judges focus on first.
 

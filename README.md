@@ -67,9 +67,9 @@ This repository is organized as a collection of task-specific notebooks, ablatio
 
 ## Model weights
 
-- **Common Task / Specific Test VII weights:** [Add link here]
-- **Specific Test V weights:** [Add link here]
-- - **Specific Test VII weights:** [Add link here]
+- **Common Task / Specific Test VII weights:** [https://huggingface.co/datasets/Arushhh/physics_informed_densenet_common_task/tree/main] (physics - informed densenet ROC 0.9976 highest for both common task and specific task VII)
+- **Specific Test V weights:** [https://huggingface.co/datasets/Arushhh/deeplense-test5-densepolar-artifacts/tree/main]   ( 0.9906 ROC on Specific task V)
+-  **Specific Test VII weights:** [https://huggingface.co/datasets/Arushhh/eqv-phys-ssl-acpt-artificats/tree/main] (Eqv - SSL weights 0.9949 ROC on Specific task VII)
 
 ## Author
 

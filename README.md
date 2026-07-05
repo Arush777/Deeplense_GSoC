@@ -1,76 +1,130 @@
-# GSoC 2026 DeepLense Evaluation Tasks
+# DeepLense — Physics-Informed Gravitational Lens Classification and Finding
 
-This repository contains my evaluation-task work for the following ML4SCI GSoC 2026 DeepLense project directions:
+This repository contains my ML4Sci DeepLense GSoC evaluation work across gravitational-lens classification, observational lens finding, and physics-guided modeling.
 
-- **DEEPLENSE6 — Gravitational Lens Finding**  
-  https://ml4sci.org/gsoc/2026/proposal_DEEPLENSE6.html
-- **DEEPLENSE5 — Physics Guided Machine Learning on Real Lensing Images**  
-  https://ml4sci.org/gsoc/2026/proposal_DEEPLENSE5.html
+## Project focus
 
-## What is included
+I worked on two DeepLense directions:
 
-For **DEEPLENSE6**, I completed:
-- **Common Task I** — Multi-Class Classification
-- **Specific Test V** — Lens Finding & Data Pipelines
+- **DEEPLENSE6 — Gravitational Lens Finding**
+- **DEEPLENSE5 — Physics-Guided Machine Learning on Real Lensing Images**
 
-For **DEEPLENSE5**, I completed:
-- **Common Task I** — Multi-Class Classification
-- **Specific Test VII** — Physics-Guided ML
+The goal was to build strong PyTorch baselines, add physics-guided structure, evaluate robustness, and release reusable model artifacts.
 
-## Implementation setup
+## What I implemented
 
-All tasks were implemented in **PyTorch** using **Kaggle notebooks** on a **Tesla P100 16 GB GPU**.
+| Track | Task | What I built |
+|---|---|---|
+| Common Task I | Multi-class lens classification | DenseNet-based classifier for `no`, `sphere`, and `vort` classes |
+| Specific Test V | Lens finding and data pipelines | Binary lens finder for 3-band observational cutouts |
+| Specific Test VII | Physics-guided ML | Physics-informed / equivariant SSL experiments for lens classification |
 
-I used Kaggle because it gave me:
-- a simple notebook-based workflow for rapid experimentation,
-- a reproducible GPU environment,
-- and an easy way to train, evaluate, save checkpoints, and organize outputs for multiple ablations.
+## Results
+
+| Component | Metric | Result |
+|---|---:|---:|
+| Physics-informed DenseNet | ROC-AUC | **0.9976** |
+| Specific Test V lens finder | ROC-AUC | **0.9906** |
+| Equivariant / physics SSL model | ROC-AUC | **0.9949** |
+
+## Public artifacts
+
+| Artifact | Link |
+|---|---|
+| Common Task / Specific Test VII weights | https://huggingface.co/datasets/Arushhh/physics_informed_densenet_common_task/tree/main |
+| Specific Test V weights | https://huggingface.co/datasets/Arushhh/deeplense-test5-densepolar-artifacts/tree/main |
+| Specific Test VII equivariant SSL weights | https://huggingface.co/datasets/Arushhh/eqv-phys-ssl-acpt-artificats/tree/main |
 
 ## Dataset setup
 
 ### Common Task I / Specific Test VII
-These tasks use the same normalized strong-lensing image dataset with three classes:
+
+The common-task dataset contains normalized strong-lensing images with three classes:
+
 - `no`
 - `sphere`
 - `vort`
 
-My work here focuses on:
-- a strong common-task benchmark,
-- and more physics-guided / PINN-style extensions for Specific Test VII.
+This setup was used for the DenseNet baseline and physics-guided extensions.
 
 ### Specific Test V
-This task uses observational **3-band cutouts** with shape `(3, 64, 64)` for binary lens finding:
+
+Specific Test V uses observational 3-band cutouts with shape `(3, 64, 64)`:
+
 - `train_lenses`
 - `train_nonlenses`
 - `test_lenses`
 - `test_nonlenses`
 
-My work here focuses on:
-- a strong benchmark lens finder,
-- candidate ranking under severe class imbalance,
-- and research directions for reducing false positives.
+This task is closer to practical lens finding because it involves severe class imbalance and low false-positive requirements.
 
-## Why I worked on these tasks
+## Implementation details
 
-I chose these tasks because together they cover two parts of the DeepLense problem that I find especially interesting:
+- Framework: **PyTorch**
+- Training environment: **Kaggle notebooks**
+- GPU: **Tesla P100 16 GB**
+- Main model families:
+  - DenseNet-style CNNs
+  - physics-informed variants
+  - equivariant / self-supervised extensions
+- Evaluation:
+  - ROC-AUC
+  - class-level validation
+  - ablation comparisons
+  - saved checkpoint artifacts
 
-- **strong classification baselines and physics-guided modeling**
-- **practical lens finding on observational data with low false-positive requirements**
+## Why this is not just a notebook dump
 
-The common task gave me a clean starting point for benchmarking architectures, while Specific Test V and Specific Test VII let me explore two directions I care about more deeply:
-- lens finding in realistic observational settings,
-- and physics-guided learning through more structured model design.
+This repository is organized around reproducible research artifacts:
 
-## Repository note
+- task-specific notebooks
+- model checkpoints
+- result tables
+- ablation writeups
+- supporting figures
+- public HuggingFace artifact release
 
-This repository is organized as a collection of task-specific notebooks, ablations, write-ups, and supporting figures.
+## Reproducibility
 
-## Model weights
+To reproduce the experiments:
 
-- **Common Task / Specific Test VII weights:** [https://huggingface.co/datasets/Arushhh/physics_informed_densenet_common_task/tree/main] (physics - informed densenet ROC 0.9976 highest for both common task and specific task VII)
-- **Specific Test V weights:** [https://huggingface.co/datasets/Arushhh/deeplense-test5-densepolar-artifacts/tree/main]   ( 0.9906 ROC on Specific task V)
--  **Specific Test VII weights:** [https://huggingface.co/datasets/Arushhh/eqv-phys-ssl-acpt-artificats/tree/main] (Eqv - SSL weights 0.9949 ROC on Specific task VII)
+1. Open the corresponding task notebook.
+2. Attach the required DeepLense dataset.
+3. Run preprocessing cells.
+4. Train the listed architecture.
+5. Evaluate ROC-AUC.
+6. Compare against the reported checkpoint.
+7. Optionally load the public HuggingFace weights.
+
+## Suggested repository structure
+
+```text
+Deeplense_GSoC/
+├── common_task/
+│   ├── notebooks/
+│   ├── results/
+│   └── figures/
+├── specific_test_v/
+│   ├── notebooks/
+│   ├── results/
+│   └── weights/
+├── specific_test_vii/
+│   ├── notebooks/
+│   ├── results/
+│   └── weights/
+└── README.md
+```
+
+If the repo is not currently organized like this, use this structure as the cleanup target.
+
+## Next improvements
+
+- Add a one-command inference script for each released checkpoint.
+- Add plots for ROC curves and confusion matrices.
+- Add a `results/` folder with saved CSVs.
+- Add a short paper-style method summary.
+- Add links to exact Kaggle notebooks if they are public.
 
 ## Author
 
-**Arush Sharma**
+Arush Sharma
